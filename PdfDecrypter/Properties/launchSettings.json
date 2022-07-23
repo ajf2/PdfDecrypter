@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PdfDecrypter": {
+      "commandName": "Project",
+      "commandLineArgs": "payslip.pdf"
+    }
+  }
+}

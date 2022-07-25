@@ -1,22 +1,12 @@
-﻿string inputFilePath = "";
+﻿using PdfDecrypter;
+
+string inputFilePath = "";
 
 var argsAreValid = ReadInputFilePath(args);
 if (!argsAreValid) PrintUsage();
-else
-{
-    var parameters = new PdfDecrypter.Parameters(inputFilePath);
-    var fileIsEncrypted = await PdfDecrypter.PdfDecrypter.CheckIsEncryptedAsync(parameters);
-    if (fileIsEncrypted) {
-        Console.Write("File is encrypted, enter password:");
-        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-        while (keyInfo.Key != ConsoleKey.Enter)
-        {
-            parameters.Password += keyInfo.KeyChar;
-            keyInfo = Console.ReadKey(true);
-        }
-
-        await PdfDecrypter.PdfDecrypter.DecryptAsync(parameters);
-    }
+else {
+  var parameters = new Parameters(inputFilePath);
+  await PdfDecrypter.PdfDecrypter.BruteForcePassword(parameters, new BruteForcePasswordIterator());
 }
 
 bool ReadInputFilePath(string[] args)
